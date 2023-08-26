@@ -1,5 +1,6 @@
 import { render } from "lit-html";
 import type { CustomElementFromComponent } from "./api.js";
+import { createEffect, createRoot, createSignal } from "solid-js";
 
 export const customElementFromComponent: CustomElementFromComponent = (
   component
@@ -10,19 +11,33 @@ export const customElementFromComponent: CustomElementFromComponent = (
       this.attachShadow({ mode: "open" });
     }
 
-    mappedAttributes = {};
+    attributeGetters = {};
+    attributeSetters = {};
 
     connectedCallback() {
-      this.mappedAttributes = Object.fromEntries(
-        Object.values(this.attributes).map((x) => [x.name, x.value])
+      const attributes = Object.fromEntries(
+        Object.values(this.attributes).map((x) => [
+          x.name,
+          createSignal(x.value),
+        ])
       );
-      render(component(this.mappedAttributes), this.shadowRoot);
+      this.attributeGetters = Object.fromEntries(
+        Object.entries(attributes).map(([name, [get]]) => [name, get])
+      );
+      this.attributeSetters = Object.fromEntries(
+        Object.entries(attributes).map(([name, [, set]]) => [name, set])
+      );
+      createRoot(() => {
+        createEffect(() => {
+          render(component(this.attributeGetters), this.shadowRoot);
+        });
+      });
     }
 
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-      this.mappedAttributes[name] = newValue;
-      render(component(this.mappedAttributes), this.shadowRoot);
-    }
+    // attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    //   this.attributeSignals[name] = newValue;
+    //   render(component(this.attributeSignals), this.shadowRoot);
+    // }
   }
   return Component;
 };

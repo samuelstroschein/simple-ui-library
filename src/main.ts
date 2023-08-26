@@ -1,18 +1,19 @@
-import { html } from "lit-html";
+import { createSignal } from "solid-js";
 import { customElementFromComponent } from "./customElementFromComponent.js";
+import { html } from "./render.js";
 
-const MyComponent = (props: { name: string; age: number }) => {
-  let subAge = 21;
+const MyComponent = (props: { name: () => string; age: () => number }) => {
+  const [subAge, setSubAge] = createSignal(55);
 
   const handleClick = () => {
-    subAge++;
+    setSubAge(subAge() + 1);
     console.log(subAge);
   };
 
   return html`
-    <div>Hello ${props.name}! You are ${props.age} years old.</div>
+    <div>Hello ${props.name()}! You are ${subAge()} years old.</div>
     <button @click=${handleClick}>Increase age</button>
-    <my-second-component name="Samuel" age=${subAge}></my-second-component>
+    <my-second-component name="Samuel" age=${subAge()}></my-second-component>
   `;
 };
 
@@ -21,6 +22,8 @@ const MySecondComponent = (props: { name: string; age: number }) => {
     <div>Hello ${props.name}! You are ${props.age} years old.</div>
   `;
 };
+
+console.log("Hello world!");
 
 customElements.define("element-x", customElementFromComponent(MyComponent));
 customElements.define(
