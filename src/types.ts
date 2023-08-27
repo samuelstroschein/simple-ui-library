@@ -10,7 +10,7 @@ import { LitElement, type html } from "lit";
  * `customElement` function.
  */
 export type Component = (
-  props: Record<string, SupportedPropertyType>
+  props: Record<string, Signal>
 ) => ReturnType<typeof html>;
 
 /**
@@ -28,9 +28,9 @@ export type CreateCustomElement = (component: Component) => typeof LitElement;
  * limited to `String`, `Number`, `Boolean`, `Object`, and `Array`.
  *
  */
-export type SupportedPropertyType =
-  | StringConstructor
-  | NumberConstructor
-  | BooleanConstructor
-  | ObjectConstructor
-  | ArrayConstructor;
+type Signal =
+  | (() => string)
+  | (() => number)
+  | (() => boolean)
+  | (() => object)
+  | (() => any[]);

@@ -1,4 +1,4 @@
-export type { Component, SupportedPropertyType } from "./types.js";
+export type { Component } from "./types.js";
 export { html } from "./html.js";
 export { toCustomElement } from "./toCustomElement.js";
 export { signal, derived, effect } from "./reactivity.js";

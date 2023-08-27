@@ -20,6 +20,7 @@
   "devDependencies": {
     "esbuild": "^0.19.2",
     "jsdom": "^22.1.0",
+    "tsd": "^0.28.1",
     "typescript": "^5.2.2",
     "vitest": "^0.34.3"
   }
