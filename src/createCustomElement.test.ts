@@ -1,7 +1,7 @@
 import { LitElement } from "lit";
 import { createCustomElement } from "./createCustomElement.js";
 import { signal } from "./reactivity.js";
-import { html } from "./render.js";
+import { html } from "./html.js";
 import { describe, expect, it } from "vitest";
 
 const MockComponent = (props?: { name: () => string; age: () => number }) => {

@@ -15,6 +15,7 @@ export const html = (...args: Parameters<typeof litHtml>) => {
   return template;
 };
 
+// from https://github.com/lit/lit/discussions/3725#discussioncomment-5431545
 class SubscribeToSignalDirective extends AsyncDirective {
   #cleanup?: () => void;
   #signal?: ReturnType<typeof Signal<unknown>>;

@@ -12,6 +12,8 @@ customElements.define(
 
     console.log("rendering");
 
+    console.log({ props });
+
     effect(() => {
       console.log(`user age is ${props.age()}`);
     });
