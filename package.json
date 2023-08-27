@@ -4,9 +4,13 @@
   "description": "todo",
   "type": "module",
   "author": "Samuel Stroschein",
+  "exports": {
+    ".": "./dist/index.js",
+    "./bundle": "./dist/bundle/index.js"
+  },
   "scripts": {
-    "build": "tsc",
-    "dev": "node ./build.js WATCH=true",
+    "build": "node ./build.js",
+    "dev": "NODE_ENV=development node ./build.js",
     "test": "vitest --environment jsdom "
   },
   "dependencies": {
