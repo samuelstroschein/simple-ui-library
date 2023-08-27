@@ -9,7 +9,10 @@ const library = await context({
   entryPoints: ["src/**/*.ts"],
   outdir: "./dist",
   bundle: false,
-  minify: isDevelopment === false,
+  minify: false,
+  platform: "neutral",
+  sourcemap: true,
+  target: "es2022",
   plugins: [
     {
       name: "logger",
@@ -26,6 +29,8 @@ const library = await context({
 const bundle = await context({
   entryPoints: ["src/index.ts"],
   outdir: "./dist/bundle",
+  platform: "neutral",
+  target: "es2022",
   bundle: true,
   minify: isDevelopment === false,
 });

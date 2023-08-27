@@ -9,9 +9,9 @@
     "./bundle": "./dist/bundle/index.js"
   },
   "scripts": {
-    "build": "tsc --build --emitDeclarationOnly && node ./build.js",
+    "build": "tsc --project ./tsconfig.build.json --emitDeclarationOnly && node ./build.js ",
     "dev": "NODE_ENV=development node ./build.js",
-    "test": "vitest --environment jsdom "
+    "test": "vitest run --environment jsdom"
   },
   "dependencies": {
     "@preact/signals-core": "^1.4.0",
