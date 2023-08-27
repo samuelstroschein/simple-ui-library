@@ -1,5 +1,4 @@
-import { html as litHtml } from "lit-html";
-import { noChange } from "lit";
+import { noChange, html as litHtml } from "lit";
 import { directive, AsyncDirective } from "lit/async-directive.js";
 import { effect, type signal as Signal } from "./reactivity.js";
 

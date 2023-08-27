@@ -1,5 +1,4 @@
-import { LitElement } from "lit";
-import type { html } from "lit-html";
+import { LitElement, type html } from "lit";
 
 /**
  * A component is a function that receives properties and returns a template.
