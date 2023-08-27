@@ -1,4 +1,5 @@
-import { html, derived, define } from "../dist/bundle/index.js";
+// @ts-nocheck
+import { define, derived, html } from "./index.js";
 
 define("simple-component", (props = { name: String, age: Number }) => {
   const twentyYearsOlder = derived(() => props.age() + 20);
@@ -6,10 +7,5 @@ define("simple-component", (props = { name: String, age: Number }) => {
   return html`
     <p>Hello ${props.name}, you are ${props.age} old.</p>
     <p>In 20 years you will be ${twentyYearsOlder}.</p>
-    ${Nested({ city: "London" })}
   `;
 });
-
-const Nested = (props) => {
-  return html`<p>This is nested!!! ${props.city}</p>`;
-};
