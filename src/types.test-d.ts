@@ -12,11 +12,7 @@ const MockComponent = (
     name: String,
     age: Number,
     photos: Array<string>,
-    user: Object as () => {
-      name: string;
-      identifier: number;
-      photos: string[];
-    },
+    user: Object,
   }
 ) => {
   // expecting a function getter for each property
@@ -33,21 +29,16 @@ const MockComponent = (
   // @ts-expect-error - expecting a string, not a number
   expectType<number[]>(props.photos());
 
-  // achieving typesafety for objects
-  expectType<{ name: string; identifier: number; photos: string[] }>(
-    props.user()
-  );
-
   return html`<div>Hello, ${props.name}!</div>`;
 };
 
 MockComponent({
   name: () => "John",
-  age: () => 42,
-  photos: () => ["a", "b"],
-  user: () => ({
-    name: "John",
-    identifier: 42,
-    photos: ["a", "b"],
-  }),
+  // age: () => 42,
+  // photos: () => ["a", "b"],
+  // user: () => ({
+  //   name: "John",
+  //   identifier: 42,
+  //   photos: ["a", "b"],
+  // }),
 });

@@ -29,8 +29,8 @@ export type CreateCustomElement = (component: Component) => typeof LitElement;
  *
  */
 type Signal =
-  | (() => string)
-  | (() => number)
-  | (() => boolean)
-  | (() => object)
-  | (() => any[]);
+  | ((() => string) | StringConstructor)
+  | ((() => number) | NumberConstructor)
+  | ((() => boolean) | BooleanConstructor)
+  | ((() => object) | ObjectConstructor)
+  | (() => Array<any>);
