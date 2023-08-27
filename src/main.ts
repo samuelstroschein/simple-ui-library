@@ -1,32 +1,23 @@
-import { createSignal } from "solid-js";
-import { customElementFromComponent } from "./customElementFromComponent.js";
+import { customElement } from "./customElement.js";
+import { derived, effect, signal } from "./reactivity.js";
 import { html } from "./render.js";
 
-const MyComponent = (props: { name: () => string; age: () => number }) => {
-  const [subAge, setSubAge] = createSignal(55);
+const MyComponent = (props?: { name: () => string; age: () => number }) => {
+  const derivedAge = derived(() => props.age() + 4);
 
   const handleClick = () => {
-    setSubAge(subAge() + 1);
-    console.log(subAge);
+    // @ts-ignore
+    props.age.set(props.age() + 1);
+    console.log({ myAge: derivedAge.value });
   };
 
   return html`
-    <div>Hello ${props.name()}! You are ${subAge()} years old.</div>
+    <p>Hello dear viewers</p>
+    <div>
+      You are ${props.age()} years old. The derived age is ${derivedAge}
+    </div>
     <button @click=${handleClick}>Increase age</button>
-    <my-second-component name="Samuel" age=${subAge()}></my-second-component>
   `;
 };
 
-const MySecondComponent = (props: { name: string; age: number }) => {
-  return html`
-    <div>Hello ${props.name}! You are ${props.age} years old.</div>
-  `;
-};
-
-console.log("Hello world!");
-
-customElements.define("element-x", customElementFromComponent(MyComponent));
-customElements.define(
-  "my-second-component",
-  customElementFromComponent(MySecondComponent)
-);
+customElements.define("element-x", customElement(MyComponent));
