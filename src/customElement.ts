@@ -1,31 +1,43 @@
-import { type CustomElement, type PropertyTypes } from "./api.js";
-import { effect, signal } from "./reactivity.js";
-import { LitElement, type PropertyDeclarations } from "lit";
+import { type CustomElement } from "./api.js";
+import { signal } from "./reactivity.js";
+import {
+  LitElement,
+  type PropertyDeclaration,
+  type PropertyDeclarations,
+} from "lit";
 
 export const customElement: CustomElement = (component) => {
   return class Element extends LitElement {
-    private _disposeEffect?: () => void;
-
     static properties = getProps(component.toString());
 
-    performUpdate() {
-      if (!this.isUpdatePending) {
-        return;
+    /**
+     * A map of the element's properties as signals.
+     *
+     * Initialized to undefined when the element is created.
+     */
+    componentProperties = Object.fromEntries(
+      [...Element.elementProperties.keys()].map((key) => [
+        key,
+        signal(undefined),
+      ])
+    );
+
+    /**
+     * Set the element's sig
+     */
+    requestUpdate(
+      name?: PropertyKey,
+      oldValue?: unknown,
+      options?: PropertyDeclaration<unknown, unknown>
+    ): void {
+      if (name && this[name]) {
+        this.componentProperties[name as any].set(this[name]);
       }
-      this._disposeEffect?.();
-      this._disposeEffect = effect(() => {
-        this.isUpdatePending = true;
-        super.performUpdate();
-      });
+      super.requestUpdate(name, oldValue, options);
     }
 
     render() {
-      console.log("rendering");
-      const props = [...Element.elementProperties.keys()];
-      const propertiesAsSignals = Object.fromEntries(
-        props.map((key) => [key, signal(this[key as keyof typeof props])])
-      );
-      return component(propertiesAsSignals);
+      return component(this.componentProperties);
     }
   };
 };
@@ -52,10 +64,7 @@ const getProps = (functionText: string): PropertyDeclarations => {
     // map the props object to a lit property options
     // https://lit.dev/docs/components/properties/#property-options
     const asLitPropertyOptions = Object.fromEntries(
-      Object.entries(propsObject).map(([key, value]) => [
-        key,
-        { type: value as PropertyTypes[number] },
-      ])
+      Object.entries(propsObject).map(([key, value]) => [key, { type: value }])
     );
     return asLitPropertyOptions;
   } catch (error) {

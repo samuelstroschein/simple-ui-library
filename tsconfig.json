@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*.ts", "./build.js"],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "checkJs": true,
     "allowJs": true,

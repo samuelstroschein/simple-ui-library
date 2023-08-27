@@ -2,12 +2,17 @@ import { LitElement } from "lit";
 import type { html } from "lit-html";
 
 /**
- * A component is a function that returns an html template.
+ * A component is a function that receives properties and returns a template.
  *
- * A component can be turned into a custom element using the
+ * - The `props` typed using JavaScript constructors (e.g. `String`, `Number`, etc.)
+ * are converted to signals under the hood.
+ *
+ * - A component can be turned into a custom element using the
  * `customElement` function.
  */
-export type Component = (props: object) => ReturnType<typeof html>;
+export type Component = (
+  props: Record<string, SupportedPropertyTypes>
+) => ReturnType<typeof html>;
 
 /**
  * A custom element is a web component that can be rendered to the DOM.
@@ -17,8 +22,16 @@ export type CustomElement = (component: Component) => typeof LitElement;
 /**
  * Supported property types of a component.
  *
- * The supported properties come from lit's built-in attribute
+ * - The supported properties come from lit's built-in attribute
  * converters (https://lit.dev/docs/components/properties/#conversion-type).
+ *
+ * - The supported properties rely on JavsScript's "type constructors" and are
+ * limited to `String`, `Number`, `Boolean`, `Object`, and `Array`.
+ *
  */
-export type PropertyTypes = typeof PropertyTypes;
-export const PropertyTypes = [String, Number, Boolean, Object, Array] as const;
+export type SupportedPropertyTypes =
+  | String
+  | Number
+  | Boolean
+  | Object
+  | Array<unknown>;
