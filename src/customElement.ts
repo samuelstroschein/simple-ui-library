@@ -6,7 +6,7 @@ import {
   type PropertyDeclarations,
 } from "lit";
 
-export const createCustomElement: CreateCustomElement = (component) => {
+export const customElement: CreateCustomElement = (component) => {
   return class Element extends LitElement {
     static properties = getProps(component.toString());
 
