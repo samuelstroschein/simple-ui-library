@@ -9,7 +9,7 @@
     "./bundle": "./dist/bundle/index.js"
   },
   "scripts": {
-    "build": "node ./build.js",
+    "build": "tsc --build --emitDeclarationOnly && node ./build.js",
     "dev": "NODE_ENV=development node ./build.js",
     "test": "vitest --environment jsdom "
   },

@@ -1,4 +1,4 @@
-import { type CustomElement } from "./api.js";
+import { type CreateCustomElement } from "./types.js";
 import { signal } from "./reactivity.js";
 import {
   LitElement,
@@ -6,7 +6,7 @@ import {
   type PropertyDeclarations,
 } from "lit";
 
-export const customElement: CustomElement = (component) => {
+export const createCustomElement: CreateCustomElement = (component) => {
   return class Element extends LitElement {
     static properties = getProps(component.toString());
 

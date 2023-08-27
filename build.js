@@ -6,7 +6,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
  * Library build of the module.
  */
 const library = await context({
-  entryPoints: ["src/index.ts"],
+  entryPoints: ["src/**/*.ts"],
   outdir: "./dist",
   bundle: false,
   minify: isDevelopment === false,

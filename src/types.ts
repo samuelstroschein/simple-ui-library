@@ -16,7 +16,7 @@ export type Component = (
 /**
  * A custom element is a web component that can be rendered to the DOM.
  */
-export type CustomElement = (component: Component) => typeof LitElement;
+export type CreateCustomElement = (component: Component) => typeof LitElement;
 
 /**
  * Supported property types of a component.

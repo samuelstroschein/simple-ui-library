@@ -1,6 +1,4 @@
-import { customElement } from "../src/customElement.js";
-import { derived, effect, signal } from "../src/reactivity.js";
-import { html } from "../src/render.js";
+
 
 const MyComponent = (props = { name: String, age: Number }) => {
   const twentyYearsOlder = derived(() => props.age() + 20);
