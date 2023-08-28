@@ -1,5 +1,7 @@
 # samuel stroschein's simple UI library (sui)
 
+(Just) functions that emit web components. 
+
 ## Goals
 
 - simplicity over maximum performance and/or features
